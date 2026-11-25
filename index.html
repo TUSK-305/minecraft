@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111a16">
+  <title>TUSK — مغامرتك تبدأ هنا</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f3f5e9;
+      --muted: #a8b4a8;
+      --green: #83d44b;
+      --green-dark: #4b9b37;
+      --panel: #19231e;
+      --line: #34443a;
+      --pixel: "Courier New", "Lucida Console", monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #101713;
+      font-family: Tahoma, Arial, sans-serif;
+      line-height: 1.7;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    .page-shell {
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 50% 24%, rgba(84, 146, 66, .16), transparent 42%),
+        #101713;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    header {
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(168, 180, 168, .12);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font: 900 22px var(--pixel);
+      letter-spacing: 2px;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      color: #142012;
+      background: var(--green);
+      box-shadow: inset -5px -5px 0 rgba(0, 0, 0, .2), 4px 4px 0 #30442b;
+      font: 900 22px var(--pixel);
+    }
+
+    nav { display: flex; align-items: center; gap: 32px; color: var(--muted); font-size: 14px; }
+    nav a:hover { color: var(--green); }
+
+    .nav-download {
+      padding: 9px 16px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+    }
+
+    .language-toggle {
+      padding: 8px 12px;
+      color: var(--green);
+      border: 1px solid var(--line);
+      background: transparent;
+      cursor: pointer;
+      font: 700 11px var(--pixel);
+      letter-spacing: 1px;
+    }
+
+    .language-toggle:hover { border-color: var(--green); }
+
+    .hero {
+      min-height: 590px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      text-align: center;
+      padding: 76px 0 135px;
+      isolation: isolate;
+    }
+
+    .hero > div { animation: enter 700ms cubic-bezier(.2, .8, .2, 1) both; }
+
+    .hero::before, .hero::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      image-rendering: pixelated;
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 290px;
+      height: 210px;
+      left: 1%;
+      bottom: 60px;
+      opacity: .7;
+      background:
+        linear-gradient(90deg, transparent 0 12%, #31482c 12% 24%, transparent 24% 38%, #435f35 38% 56%, transparent 56% 70%, #31482c 70% 86%, transparent 86%),
+        linear-gradient(0deg, #253c2a 0 24%, #385434 24% 40%, transparent 40%);
+      clip-path: polygon(0 100%, 0 55%, 13% 55%, 13% 36%, 28% 36%, 28% 58%, 40% 58%, 40% 20%, 55% 20%, 55% 44%, 70% 44%, 70% 31%, 84% 31%, 84% 58%, 100% 58%, 100% 100%);
+      animation: scenery 5s ease-in-out infinite alternate;
+    }
+
+    .hero::after {
+      width: 240px;
+      height: 185px;
+      right: 2%;
+      bottom: 64px;
+      opacity: .5;
+      background:
+        linear-gradient(90deg, transparent 0 16%, #31452b 16% 31%, transparent 31% 45%, #3b5530 45% 65%, transparent 65% 75%, #2f452e 75%),
+        linear-gradient(0deg, #263d2b 0 30%, #395033 30% 46%, transparent 46%);
+      clip-path: polygon(0 100%, 0 58%, 16% 58%, 16% 30%, 34% 30%, 34% 54%, 49% 54%, 49% 17%, 68% 17%, 68% 47%, 83% 47%, 83% 36%, 100% 36%, 100% 100%);
+      animation: scenery 6s ease-in-out infinite alternate-reverse;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 12px;
+      border: 1px solid rgba(131, 212, 75, .28);
+      color: #b7e99a;
+      background: rgba(36, 61, 38, .48);
+      font-size: 12px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      box-shadow: 0 0 10px var(--green);
+    }
+
+    h1 {
+      margin: 22px 0 6px;
+      font: 900 clamp(76px, 13vw, 142px)/.95 var(--pixel);
+      letter-spacing: 7px;
+      color: var(--green);
+      text-shadow: 7px 7px 0 #315a2c, 12px 12px 0 rgba(0, 0, 0, .38);
+    }
+
+    .hero h2 {
+      margin: 28px 0 10px;
+      font-size: clamp(22px, 3vw, 31px);
+      font-weight: 800;
+    }
+
+    .hero p {
+      max-width: 550px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button {
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 22px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 800;
+      transition: transform .15s, filter .15s;
+    }
+
+    .button:hover { transform: translateY(-2px); filter: brightness(1.08); }
+    .button:focus-visible, a:focus-visible { outline: 3px solid #d5f7b5; outline-offset: 4px; }
+
+    .button-primary {
+      color: #13200f;
+      background: var(--green);
+      box-shadow: 0 5px 0 var(--green-dark);
+    }
+
+    .button-secondary {
+      color: var(--ink);
+      border: 1px solid #536252;
+      background: rgba(17, 25, 20, .8);
+    }
+
+    .download-icon { font: 900 19px var(--pixel); }
+    .hero-note { display: block; margin-top: 17px; color: #829083; font-size: 11px; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      position: relative;
+      z-index: 1;
+      border: 1px solid var(--line);
+      background: rgba(25, 35, 30, .92);
+    }
+
+    .stat {
+      min-height: 104px;
+      display: grid;
+      place-content: center;
+      text-align: center;
+    }
+
+    .stat + .stat { border-inline-start: 1px solid var(--line); }
+    .stat strong { color: var(--green); font: 900 20px var(--pixel); }
+    .stat span { margin-top: 3px; color: var(--muted); font-size: 12px; }
+
+    section.content { padding: 94px 0 88px; }
+
+    .section-heading { margin-bottom: 32px; text-align: center; }
+    .section-heading small { color: var(--green); font: 700 11px var(--pixel); letter-spacing: 2px; }
+    .section-heading h2 { margin: 7px 0; font-size: 26px; }
+    .section-heading p { margin: 0; color: var(--muted); font-size: 13px; }
+
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .feature {
+      min-height: 190px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, #1b2821, #151d19);
+      animation: enter 600ms both;
+    }
+
+    .feature:nth-child(2) { animation-delay: 100ms; }
+    .feature:nth-child(3) { animation-delay: 200ms; }
+    .feature:hover { transform: translateY(-5px); border-color: #688752; }
+
+    .feature-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      color: var(--green);
+      border: 1px solid #41543f;
+      background: #253627;
+      font-size: 20px;
+    }
+
+    .feature h3 { margin: 13px 0 4px; font-size: 16px; }
+    .feature p { margin: 0; color: var(--muted); font-size: 12px; }
+
+    .feature { transition: transform .2s ease, border-color .2s ease; }
+
+    .download-panel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 28px 32px;
+      border: 1px solid #526b42;
+      background:
+        linear-gradient(110deg, rgba(50, 84, 40, .65), rgba(24, 37, 28, .9)),
+        var(--panel);
+    }
+
+    .download-panel h2 { margin: 0 0 4px; font-size: 20px; }
+    .download-panel p { margin: 0; color: #c1ceb9; font-size: 13px; }
+    .download-panel .button { flex: 0 0 auto; }
+
+    footer {
+      padding: 22px 0;
+      border-top: 1px solid rgba(168, 180, 168, .12);
+      color: #829083;
+      font-size: 11px;
+    }
+
+    .footer-inner { display: flex; justify-content: space-between; gap: 14px; }
+
+    .toast {
+      position: fixed;
+      z-index: 5;
+      inset-inline: 20px;
+      bottom: 22px;
+      width: fit-content;
+      max-width: calc(100% - 40px);
+      margin-inline: auto;
+      padding: 12px 18px;
+      color: var(--ink);
+      border: 1px solid #536b46;
+      background: #1d2b21;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .35);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: .2s ease;
+      font-size: 13px;
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    @keyframes enter {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scenery {
+      from { translate: 0 0; }
+      to { translate: 0 -8px; }
+    }
+
+    html[dir="ltr"] .stat + .stat { border-inline-start: 1px solid var(--line); }
+
+    @media (max-width: 680px) {
+      .container { width: min(100% - 28px, 520px); }
+      header { height: 70px; }
+      nav { gap: 14px; font-size: 12px; }
+      nav a:not(.nav-download) { display: none; }
+      nav { gap: 8px; }
+      .language-toggle { padding: 7px 8px; }
+      .nav-download { padding: 7px 11px; }
+      .brand { font-size: 19px; }
+      .hero { min-height: 535px; padding: 70px 0 116px; }
+      .hero::before { left: -105px; bottom: 34px; transform: scale(.75); transform-origin: bottom left; }
+      .hero::after { right: -105px; bottom: 38px; transform: scale(.75); transform-origin: bottom right; }
+      .hero p { max-width: 410px; font-size: 13px; }
+      .stats { grid-template-columns: 1fr; }
+      .stat { min-height: 76px; }
+      .stat + .stat { border-inline-start: 0; border-top: 1px solid var(--line); }
+      section.content { padding: 68px 0; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .feature { min-height: 0; }
+      .download-panel { align-items: stretch; flex-direction: column; padding: 24px; }
+      .download-panel .button { width: 100%; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="container">
+      <a class="brand" href="#" aria-label="TUSK - الصفحة الرئيسية" data-i18n-aria="brandLabel">
+        <span class="brand-mark" aria-hidden="true">T</span>
+        <span>TUSK</span>
+      </a>
+      <nav aria-label="التنقل الرئيسي" data-i18n-aria="navLabel">
+        <a href="#features" data-i18n="navFeatures">المميزات</a>
+        <a href="#about" data-i18n="navAbout">عن TUSK</a>
+        <a class="nav-download" href="#download" data-i18n="download">تحميل التطبيق</a>
+        <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch to English" data-i18n-aria="languageLabel">EN</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero container" id="about">
+        <div>
+          <div class="eyebrow"><span class="status-dot" aria-hidden="true"></span><span data-i18n="eyebrow">إصدار المجتمع · واجهة تجريبية</span></div>
+          <h1>TUSK</h1>
+          <h2 data-i18n="heroTitle">عالمك، بطريقتك.</h2>
+          <p data-i18n="heroDescription">واجهة مجتمع TUSK — مساحة لعشّاق ماينكرافت لاستكشاف الأدوات والإضافات ومشاركة تجاربهم.</p>
+          <div class="hero-actions">
+            <button class="button button-primary" type="button" data-demo>
+              <span class="download-icon" aria-hidden="true">↓</span>
+              <span data-i18n="download">تحميل التطبيق</span>
+            </button>
+            <a class="button button-secondary" href="#features"><span data-i18n="discover">اكتشف المزيد</span> <span aria-hidden="true">←</span></a>
+          </div>
+          <span class="hero-note" data-i18n="heroNote">واجهة عرض فقط — لا يتوفر ملف تنزيل حقيقي حالياً</span>
+        </div>
+      </section>
+
+      <div class="container">
+        <div class="stats" aria-label="معلومات عن المشروع" data-i18n-aria="statsLabel">
+          <div class="stat"><strong>01</strong><span data-i18n="statCommunity">مشروع مجتمعي</span></div>
+          <div class="stat"><strong>∞</strong><span data-i18n="statWorlds">عوالم للاستكشاف</span></div>
+          <div class="stat"><strong>TUSK</strong><span data-i18n="statAdventure">ابدأ مغامرتك</span></div>
+        </div>
+      </div>
+
+      <section class="content container" id="features">
+        <div class="section-heading">
+          <small>MADE FOR ADVENTURE</small>
+          <h2 data-i18n="featuresTitle">مصمم لعشّاق العوالم المفتوحة</h2>
+          <p data-i18n="featuresIntro">كل ما تحتاجه لتجربة مجتمعية ممتعة، في مكان واحد.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">▦</div>
+            <h3 data-i18n="featureOneTitle">واجهة قابلة للتخصيص</h3>
+            <p data-i18n="featureOneDescription">رتّب تجربة اللعب واختر مظهراً يناسب أسلوبك.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">⚒</div>
+            <h3 data-i18n="featureTwoTitle">اختصارات التحكم</h3>
+            <p data-i18n="featureTwoDescription">اعرض مفاتيح التحكم لتسهيل التعلّم واللعب.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">✦</div>
+            <h3 data-i18n="featureThreeTitle">أدوات بناء إبداعية</h3>
+            <p data-i18n="featureThreeDescription">أفكار وأدوات مساعدة للبناء في عوالمك الخاصة.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="container" id="download" style="padding-bottom: 82px">
+        <div class="download-panel">
+          <div>
+            <h2 data-i18n="downloadTitle">جاهز تدخل عالم TUSK؟</h2>
+            <p data-i18n="downloadDescription">هذه نسخة تصميمية للواجهة؛ زر التحميل تجريبي ولا يحمّل ملفاً.</p>
+          </div>
+          <button class="button button-primary" type="button" data-demo>
+            <span class="download-icon" aria-hidden="true">↓</span>
+            <span data-i18n="download">تحميل التطبيق</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <span data-i18n="footerCopyright">© 2026 TUSK — واجهة مجتمعية تجريبية</span>
+        <span data-i18n="footerDisclaimer">Minecraft علامة تجارية لمُلّاكها. هذا المشروع غير تابع لها.</span>
+      </div>
+    </footer>
+  </div>
+  <div class="toast" id="demo-toast" role="status" aria-live="polite" data-i18n="toast">هذه واجهة تجريبية فقط — لا يتوفر تنزيل حقيقي حالياً.</div>
+  <script>
+    const translations = {
+      ar: {
+        brandLabel: "TUSK - الصفحة الرئيسية", navLabel: "التنقل الرئيسي",
+        navFeatures: "المميزات", navAbout: "عن TUSK", download: "تحميل التطبيق",
+        languageLabel: "Switch to English", eyebrow: "إصدار المجتمع · واجهة تجريبية",
+        heroTitle: "عالمك، بطريقتك.",
+        heroDescription: "واجهة مجتمع TUSK — مساحة لعشّاق ماينكرافت لاستكشاف الأدوات والإضافات ومشاركة تجاربهم.",
+        discover: "اكتشف المزيد", heroNote: "واجهة عرض فقط — لا يتوفر ملف تنزيل حقيقي حالياً",
+        statsLabel: "معلومات عن المشروع", statCommunity: "مشروع مجتمعي",
+        statWorlds: "عوالم للاستكشاف", statAdventure: "ابدأ مغامرتك",
+        featuresTitle: "مصمم لعشّاق العوالم المفتوحة",
+        featuresIntro: "كل ما تحتاجه لتجربة مجتمعية ممتعة، في مكان واحد.",
+        featureOneTitle: "واجهة قابلة للتخصيص",
+        featureOneDescription: "رتّب تجربة اللعب واختر مظهراً يناسب أسلوبك.",
+        featureTwoTitle: "اختصارات التحكم",
+        featureTwoDescription: "اعرض مفاتيح التحكم لتسهيل التعلّم واللعب.",
+        featureThreeTitle: "أدوات بناء إبداعية",
+        featureThreeDescription: "أفكار وأدوات مساعدة للبناء في عوالمك الخاصة.",
+        downloadTitle: "جاهز تدخل عالم TUSK؟",
+        downloadDescription: "هذه نسخة تصميمية للواجهة؛ زر التحميل تجريبي ولا يحمّل ملفاً.",
+        footerCopyright: "© 2026 TUSK — واجهة مجتمعية تجريبية",
+        footerDisclaimer: "Minecraft علامة تجارية لمُلّاكها. هذا المشروع غير تابع لها.",
+        toast: "هذه واجهة تجريبية فقط — لا يتوفر تنزيل حقيقي حالياً."
+      },
+      en: {
+        brandLabel: "TUSK - Home", navLabel: "Main navigation",
+        navFeatures: "Features", navAbout: "About TUSK", download: "Download app",
+        languageLabel: "التبديل إلى العربية", eyebrow: "Community build · UI demo",
+        heroTitle: "Your world. Your way.",
+        heroDescription: "The TUSK community hub — a place for Minecraft fans to explore tools, add-ons, and share their experiences.",
+        discover: "Explore features", heroNote: "UI demo only — no real download is available yet",
+        statsLabel: "Project information", statCommunity: "Community project",
+        statWorlds: "Worlds to explore", statAdventure: "Start your adventure",
+        featuresTitle: "Made for open-world fans",
+        featuresIntro: "Everything for a fun community experience, in one place.",
+        featureOneTitle: "Customizable interface",
+        featureOneDescription: "Shape your experience and choose a look that fits your style.",
+        featureTwoTitle: "Control key hints",
+        featureTwoDescription: "Show control keys to make learning and playing easier.",
+        featureThreeTitle: "Creative building tools",
+        featureThreeDescription: "Ideas and helpful tools for building in your own worlds.",
+        downloadTitle: "Ready to enter the world of TUSK?",
+        downloadDescription: "This is a visual demo; the download button does not download a file.",
+        footerCopyright: "© 2026 TUSK — Community UI demo",
+        footerDisclaimer: "Minecraft is a trademark of its respective owner. This project is not affiliated.",
+        toast: "This is a UI demo only — no real download is available yet."
+      }
+    };
+
+    const languageToggle = document.querySelector("#language-toggle");
+    const toast = document.querySelector("#demo-toast");
+    let toastTimer;
+
+    languageToggle.addEventListener("click", () => {
+      const language = document.documentElement.lang === "ar" ? "en" : "ar";
+      document.documentElement.lang = language;
+      document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+      document.title = language === "ar" ? "TUSK — مغامرتك تبدأ هنا" : "TUSK — Your adventure starts here";
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        element.textContent = translations[language][element.dataset.i18n];
+      });
+      document.querySelectorAll("[data-i18n-aria]").forEach((element) => {
+        element.setAttribute("aria-label", translations[language][element.dataset.i18nAria]);
+      });
+      languageToggle.textContent = language === "ar" ? "EN" : "AR";
+    });
+
+    document.querySelectorAll("[data-demo]").forEach((button) => {
+      button.addEventListener("click", () => {
+        toast.classList.add("show");
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => toast.classList.remove("show"), 3200);
+      });
+    });
+  </script>
+</body>
+</html>
