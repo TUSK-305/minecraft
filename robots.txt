@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tusk-305.github.io/minecraft/sitemap.xml

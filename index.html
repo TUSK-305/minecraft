@@ -4,7 +4,30 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#111a16">
-  <title>TUSK — مغامرتك تبدأ هنا</title>
+  <meta name="description" content="اكتشف TUSK، واجهة مجتمعية تجريبية لعشاق ماينكرافت، مع أفكار وأدوات بناء واختصارات تحكم وتصميم مستوحى من عالم المكعبات.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://tusk-305.github.io/minecraft/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TUSK">
+  <meta property="og:title" content="TUSK | مجتمع ماينكرافت وأدوات البناء">
+  <meta property="og:description" content="واجهة مجتمعية تجريبية لعشاق ماينكرافت، مع أفكار بناء واختصارات تحكم وتصميم بلوكي.">
+  <meta property="og:url" content="https://tusk-305.github.io/minecraft/">
+  <meta property="og:locale" content="ar_AR">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="TUSK | مجتمع ماينكرافت وأدوات البناء">
+  <meta name="twitter:description" content="واجهة مجتمعية تجريبية لعشاق ماينكرافت، مع أفكار بناء واختصارات تحكم وتصميم بلوكي.">
+  <title>TUSK | مجتمع ماينكرافت وأدوات البناء</title>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "TUSK",
+      "url": "https://tusk-305.github.io/minecraft/",
+      "description": "واجهة مجتمعية تجريبية لعشاق ماينكرافت، مع أفكار بناء واختصارات تحكم وتصميم بلوكي.",
+      "inLanguage": ["ar", "en"]
+    }
+  </script>
   <style>
     :root {
       color-scheme: dark;
@@ -458,6 +481,9 @@
   <script>
     const translations = {
       ar: {
+        pageTitle: "TUSK | مجتمع ماينكرافت وأدوات البناء",
+        pageDescription: "اكتشف TUSK، واجهة مجتمعية تجريبية لعشاق ماينكرافت، مع أفكار وأدوات بناء واختصارات تحكم وتصميم مستوحى من عالم المكعبات.",
+        socialDescription: "واجهة مجتمعية تجريبية لعشاق ماينكرافت، مع أفكار بناء واختصارات تحكم وتصميم بلوكي.",
         brandLabel: "TUSK - الصفحة الرئيسية", navLabel: "التنقل الرئيسي",
         navFeatures: "المميزات", navAbout: "عن TUSK", download: "تحميل التطبيق",
         languageLabel: "Switch to English", eyebrow: "إصدار المجتمع · واجهة تجريبية",
@@ -481,6 +507,9 @@
         toast: "هذه واجهة تجريبية فقط — لا يتوفر تنزيل حقيقي حالياً."
       },
       en: {
+        pageTitle: "TUSK | Minecraft Community & Building Tools",
+        pageDescription: "Explore TUSK, a community UI demo for Minecraft fans featuring creative building ideas, control hints, and a block-inspired design.",
+        socialDescription: "A community UI demo for Minecraft fans, with building ideas, control hints, and a block-inspired design.",
         brandLabel: "TUSK - Home", navLabel: "Main navigation",
         navFeatures: "Features", navAbout: "About TUSK", download: "Download app",
         languageLabel: "التبديل إلى العربية", eyebrow: "Community build · UI demo",
@@ -513,7 +542,13 @@
       const language = document.documentElement.lang === "ar" ? "en" : "ar";
       document.documentElement.lang = language;
       document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
-      document.title = language === "ar" ? "TUSK — مغامرتك تبدأ هنا" : "TUSK — Your adventure starts here";
+      document.title = translations[language].pageTitle;
+      document.querySelector('meta[name="description"]').content = translations[language].pageDescription;
+      document.querySelector('meta[property="og:title"]').content = translations[language].pageTitle;
+      document.querySelector('meta[property="og:description"]').content = translations[language].socialDescription;
+      document.querySelector('meta[property="og:locale"]').content = language === "ar" ? "ar_AR" : "en_US";
+      document.querySelector('meta[name="twitter:title"]').content = translations[language].pageTitle;
+      document.querySelector('meta[name="twitter:description"]').content = translations[language].socialDescription;
       document.querySelectorAll("[data-i18n]").forEach((element) => {
         element.textContent = translations[language][element.dataset.i18n];
       });
